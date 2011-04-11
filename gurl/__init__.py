@@ -4,7 +4,8 @@ class Url(object):
     
     def __init__(self,url):          
         if not url.startswith('http'):
-            url = 'http://'+url 
+            url = 'http://'+url  
+        self.url = url
         self.o = urlparse(url)
     
     def __str__(self):
