@@ -8,16 +8,24 @@ IP_RE =re.compile('\d+.\d+.\d+.\d+')
 DOMAIN_LIST = [
 'com.cn',
 'net.cn',
+'edu.cn',
+'org.cn',
+'gov.cn',
+'co.jp',
+'co.uk',
 'com',
 'net',
 'me',
-'cn'
+'cn',
+'li',
+'edu',
+'gov',
 ]
 class Url(object):   
     
     def __init__(self,url=None):
         if url:
-            url = str(url)        
+            url = unicode(url)        
             self._url = url
             self.o = urlparse(url)   
             self._empty = False            
@@ -35,11 +43,11 @@ class Url(object):
              
     @property 
     def domain(self):
+        
         _host = self.o.hostname 
-
         
         if _host is None:
-            _host = self._url
+            return ''
 
         for domain in DOMAIN_LIST:
             endpoint = '.'+domain
@@ -132,7 +140,13 @@ class gurlTestCase(unittest.TestCase):
         
     def test_domain(self):
         url = Url('sina.com.cn')
-        self.assertEqual(url.domain,'sina.com.cn')
+        self.assertEqual(url.domain,'')
+        
+    def test_concn_domain(self):
+        url = Url('com.cn')
+        self.assertEqual(url.domain,'')
+        url = Url('www.sina.com.cn')
+     
 
 class TestUrl(unittest.TestCase):
     def testConstructor(self):
